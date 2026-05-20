@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stream - MovieTime</title>
+    <link rel="icon" type="png" href="logo.png">
+
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial,sans-serif;
+        }
+
+        body{
+            background:#f5f5f5;
+        }
+
+        /* HEADER */
+        header{
+    background:#fff;
+    border-bottom:1px solid #ddd;
+}
+
+/* TOP HEADER */
+.top-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:12px 35px;   /* SMALLER */
+}
+
+/* LOGO */
+.logo{
+    font-size:28px;      /* SMALLER */
+    font-weight:bold;
+    color:#ff416c;
+}
+
+/* SEARCH */
+.search-box{
+    width:55%;
+}
+select{
+    border:none;
+    outline:none;
+    background:transparent;
+    font-size:16px;
+    cursor:pointer;
+}
+
+.search-box input{
+    width:100%;
+    padding:12px 18px;   /* SMALLER */
+    border:none;
+    border-radius:10px;
+    background:#ececec;
+    font-size:15px;      /* SMALLER */
+    outline:none;
+}
+
+/* RIGHT SECTION */
+.right-section{
+    display:flex;
+    align-items:center;
+    gap:18px;
+}
+
+.location{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:15px;      /* SMALLER */
+    font-weight:bold;
+}
+
+.location select{
+    padding:5px 8px;
+    font-size:14px;
+}
+
+/* SIGN IN BUTTON */
+.signin-btn{
+    background:#ff416c;
+    color:white;
+    border:none;
+    padding:10px 20px;   /* SMALLER */
+    border-radius:10px;
+    font-size:15px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.signin-btn:hover{
+    background:#e7335d;
+}
+
+/* NAVBAR */
+.navbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:14px 35px;   /* SMALLER */
+}
+
+.nav-left,
+.nav-right{
+    display:flex;
+    gap:28px;            /* SMALLER */
+}
+
+/* NAV LINKS */
+.navbar a{
+    text-decoration:none;
+    color:black;
+    font-size:15px;      /* SMALLER */
+    font-weight:bold;
+    transition:0.3s;
+    position:relative;
+}
+
+.navbar a:hover{
+    color:#ff416c;
+}
+
+/* ACTIVE PAGE */
+.navbar .active{
+    color:#ff416c;
+}
+
+.navbar .active::after{
+    content:"";
+    position:absolute;
+    left:0;
+    bottom:-6px;
+    width:100%;
+    height:2px;
+    background:#ff416c;
+    border-radius:5px;
+}
+
+        /* NAVBAR */
+        .navbar{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            padding:22px 45px;
+        }
+
+        .nav-left,
+        .nav-right{
+            display:flex;
+            gap:40px;
+        }
+
+        .navbar a{
+            text-decoration:none;
+            color:black;
+            font-size:18px;
+            font-weight:bold;
+            transition:0.3s;
+            position:relative;
+        }
+
+        .navbar a:hover{
+            color:#ff416c;
+        }
+
+        /* ACTIVE PAGE */
+        .navbar .active{
+            color:#ff416c;
+        }
+
+        .navbar .active::after{
+            content:"";
+            position:absolute;
+            left:0;
+            bottom:-8px;
+            width:100%;
+            height:3px;
+            background:#ff416c;
+            border-radius:5px;
+        }
+
+        /* BANNER */
+        .banner{
+            width:92%;
+            height:340px;
+            margin:35px auto;
+            border-radius:25px;
+            overflow:hidden;
+            position:relative;
+            background:url('https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=1600&auto=format&fit=crop') center/cover no-repeat;
+        }
+
+        .overlay{
+            position:absolute;
+            inset:0;
+            background:rgba(0,0,0,0.6);
+        }
+
+        .banner-content{
+            position:absolute;
+            top:50%;
+            left:60px;
+            transform:translateY(-50%);
+            color:white;
+            z-index:2;
+        }
+
+        .banner-content h1{
+            font-size:65px;
+            margin-bottom:20px;
+        }
+
+        .banner-content p{
+            font-size:24px;
+        }
+
+        /* SECTION */
+        .section{
+            width:92%;
+            margin:60px auto;
+        }
+
+        .section h2{
+            font-size:42px;
+            margin-bottom:35px;
+        }
+
+        /* CARD GRID */
+        .card-grid{
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+            gap:30px;
+        }
+
+        .card{
+            background:white;
+            border-radius:22px;
+            overflow:hidden;
+            box-shadow:0 5px 18px rgba(0,0,0,0.1);
+            transition:0.3s;
+        }
+
+        .card:hover{
+            transform:translateY(-10px);
+        }
+
+        .card img{
+            width:100%;
+            height:360px;
+            object-fit:cover;
+        }
+
+        .card-content{
+            padding:22px;
+        }
+
+        .card-content h3{
+            font-size:28px;
+            margin-bottom:10px;
+        }
+
+        .card-content p{
+            color:#666;
+            font-size:17px;
+        }
+
+        .watch-btn{
+            width:100%;
+            margin-top:18px;
+            padding:15px;
+            border:none;
+            background:#ff416c;
+            color:white;
+            font-size:17px;
+            font-weight:bold;
+            border-radius:12px;
+            cursor:pointer;
+            transition:0.3s;
+        }
+
+        .watch-btn:hover{
+            background:#e7335d;
+        }
+
+        /* FOOTER */
+        footer{
+            background:#111;
+            color:white;
+            text-align:center;
+            padding:45px;
+            margin-top:70px;
+        }
+
+        footer h2{
+            margin-bottom:10px;
+        }
+
+        /* RESPONSIVE */
+        @media(max-width:1000px){
+
+            .top-header{
+                flex-direction:column;
+                gap:20px;
+            }
+
+            .search-box{
+                width:100%;
+            }
+
+            .navbar{
+                flex-direction:column;
+                gap:20px;
+            }
+
+            .nav-left,
+            .nav-right{
+                flex-wrap:wrap;
+                justify-content:center;
+            }
+
+            .banner-content h1{
+                font-size:45px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header>
+
+        <!-- TOP HEADER -->
+        <div class="top-header">
+
+            <div class="logo">
+                MovieTime
+            </div>
+
+            <div class="search-box">
+                <input type="text"
+                    placeholder="Search for Movies, Events, Sports and Activities">
+            </div>
+
+            <div class="right-section">
+
+                <div class="location">
+
+                    <label>
+                        Choose a Location:
+                    </label>
+
+                    <select>
+                        <option>Chennai</option>
+                        <option>Bangalore</option>
+                        <option>Mumbai</option>
+                        <option>Delhi</option>
+                    </select>
+
+                </div>
+
+                <button class="signin-btn">
+                    Sign In
+                </button>
+
+            </div>
+
+        </div>
+
+        <!-- NAVBAR -->
+        <div class="navbar">
+
+            <div class="nav-left">
+
+                <a href="bookmyshow.html">Home</a>
+
+                <a href="movies.html">Movies</a>
+
+                <a href="stream.html" class="active">
+                    Stream
+                </a>
+
+                <a href="events.html">Events</a>
+
+                <a href="plays.html">Plays</a>
+
+                <a href="sports.html">Sports</a>
+
+            </div>
+
+            <div class="nav-right">
+
+                <a href="offers.html">Offers</a>
+
+                <a href="giftcard.html">Gift Cards</a>
+
+            </div>
+
+        </div>
+
+    </header>
+
+    <!-- BANNER -->
+    <section class="banner">
+
+        <div class="overlay"></div>
+
+        <div class="banner-content">
+
+            <h1>Online Streaming</h1>
+
+            <p>
+                Watch your favorite movies and series anytime anywhere.
+            </p>
+
+        </div>
+
+    </section>
+
+    <!-- STREAM SECTION -->
+    <section class="section">
+
+        <h2>Trending Streams</h2>
+
+        <div class="card-grid">
+
+            <!-- CARD 1 -->
+            <div class="card">
+
+                <img src="https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?q=80&w=1200&auto=format&fit=crop">
+
+                <div class="card-content">
+
+                    <h3>Avengers</h3>
+
+                    <p>Marvel Superhero Action</p>
+
+                    <button class="watch-btn"
+                        onclick="watchNow('Avengers')">
+
+                        Watch Now
+
+                    </button>
+
+                </div>
+
+            </div>
+
+            <!-- CARD 2 -->
+            <div class="card">
+
+                <img src="https://images.unsplash.com/photo-1524985069026-dd778a71c7b4?q=80&w=1200&auto=format&fit=crop">
+
+                <div class="card-content">
+
+                    <h3>Interstellar</h3>
+
+                    <p>Sci-Fi Adventure</p>
+
+                    <button class="watch-btn"
+                        onclick="watchNow('Interstellar')">
+
+                        Watch Now
+
+                    </button>
+
+                </div>
+
+            </div>
+
+            <!-- CARD 3 -->
+            <div class="card">
+
+                <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=1200&auto=format&fit=crop">
+
+                <div class="card-content">
+
+                    <h3>Joker</h3>
+
+                    <p>Drama Thriller</p>
+
+                    <button class="watch-btn"
+                        onclick="watchNow('Joker')">
+
+                        Watch Now
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+
+        <h2>MovieTime Streaming</h2>
+
+        <p>
+            Unlimited Entertainment Experience
+        </p>
+
+    </footer>
+
+    <script>
+
+        function watchNow(movie){
+
+            alert(movie + " is now playing!");
+
+        }
+
+    </script>
+
+</body>
+
+</html>

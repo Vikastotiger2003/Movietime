@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Movies - MovieTime</title>
+<link rel="icon" type="png" href="logo.png">
+  <style>
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:Arial,sans-serif;
+    }
+
+    body{
+      background:#f4f2f2;
+      color:white;
+    }
+    select{
+    border:none;
+    outline:none;
+    background:transparent;
+    font-size:16px;
+    cursor:pointer;
+    color: white;
+}
+
+    a{
+      text-decoration:none;
+      color:inherit;
+    }
+
+    /* HEADER */
+
+    header{
+      background:#111;
+      position:sticky;
+      top:0;
+      z-index:1000;
+      border-bottom:1px solid #222;
+    }
+
+    .top-header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:18px 60px;
+    }
+
+    .logo{
+      font-size:34px;
+      font-weight:bold;
+      color:#ff416c;
+    }
+
+    .search-box{
+      flex:1;
+      margin:0 40px;
+    }
+
+    .search-box input{
+      width:100%;
+      padding:14px 20px;
+      border:none;
+      border-radius:10px;
+      background:#1f1f1f;
+      color:white;
+      outline:none;
+      font-size:16px;
+    }
+
+    .header-right{
+      display:flex;
+      align-items:center;
+      gap:20px;
+    }
+
+    .signin-btn{
+      background:#ff416c;
+      color:white;
+      border:none;
+      padding:12px 24px;
+      border-radius:10px;
+      font-weight:bold;
+      cursor:pointer;
+      transition:0.3s;
+    }
+
+    .signin-btn:hover{
+      background:#ff2c5f;
+    }
+
+    /* NAVBAR */
+
+    nav{
+      display:flex;
+      justify-content:space-between;
+      padding:16px 60px;
+      background:#111;
+      border-top:1px solid #222;
+    }
+
+    .nav-left,
+    .nav-right{
+      display:flex;
+      gap:30px;
+    }
+
+    nav a{
+      font-weight:bold;
+      transition:0.3s;
+    }
+
+    nav a:hover{
+      color:#ff416c;
+    }
+
+    /* HERO */
+
+    .hero{
+      width:100%;
+      height:90vh;
+      background:url('https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=1600&auto=format&fit=crop') center/cover no-repeat;
+      position:relative;
+      display:flex;
+      align-items:center;
+    }
+
+    .overlay{
+      position:absolute;
+      inset:0;
+      background:rgba(0,0,0,0.65);
+    }
+
+    .hero-content{
+      position:relative;
+      z-index:2;
+      width:50%;
+      margin-left:70px;
+    }
+
+    .hero-content h1{
+      font-size:80px;
+      margin-bottom:20px;
+      line-height:1.1;
+    }
+
+    .hero-content p{
+      font-size:24px;
+      line-height:1.6;
+      margin-bottom:35px;
+      color:#ddd;
+    }
+
+    .hero-buttons{
+      display:flex;
+      gap:20px;
+    }
+
+    .watch-btn{
+      background:#ff416c;
+      color:white;
+      border:none;
+      padding:18px 38px;
+      border-radius:12px;
+      font-size:18px;
+      font-weight:bold;
+      cursor:pointer;
+      transition:0.3s;
+    }
+
+    .watch-btn:hover{
+      background:#ff2c5f;
+      transform:scale(1.05);
+    }
+
+    .info-btn{
+      background:#2c2c2c;
+      color:white;
+      border:none;
+      padding:18px 38px;
+      border-radius:12px;
+      font-size:18px;
+      font-weight:bold;
+      cursor:pointer;
+      transition:0.3s;
+    }
+
+    .info-btn:hover{
+      background:#444;
+    }
+
+    /* SECTION */
+
+    .section{
+      width:94%;
+      margin:60px auto;
+    }
+
+    .section-header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:30px;
+    }
+
+    .section-header h2{
+      font-size:42px;
+    }
+
+    .view-all{
+      color:#ff416c;
+      font-weight:bold;
+      cursor:pointer;
+    }
+
+    /* MOVIE GRID */
+
+    .movie-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:28px;
+    }
+
+    .movie-card{
+      background:#181818;
+      border-radius:18px;
+      overflow:hidden;
+      transition:0.3s;
+      cursor:pointer;
+    }
+
+    .movie-card:hover{
+      transform:scale(1.05);
+    }
+
+    .movie-card img{
+      width:100%;
+      height:340px;
+      object-fit:cover;
+    }
+
+    .movie-info{
+      padding:18px;
+    }
+
+    .movie-info h3{
+      font-size:24px;
+      margin-bottom:10px;
+    }
+
+    .movie-info p{
+      color:#bbb;
+      margin-bottom:10px;
+    }
+
+    .rating{
+      color:#ff416c;
+      font-weight:bold;
+      margin-bottom:18px;
+    }
+
+    .book-btn{
+      width:100%;
+      padding:14px;
+      border:none;
+      border-radius:10px;
+      background:#ff416c;
+      color:white;
+      font-size:16px;
+      font-weight:bold;
+      cursor:pointer;
+      transition:0.3s;
+    }
+
+    .book-btn:hover{
+      background:#ff2c5f;
+    }
+
+    /* MODAL */
+
+    .modal{
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.8);
+      display:none;
+      justify-content:center;
+      align-items:center;
+      z-index:2000;
+    }
+
+    .modal-content{
+      width:520px;
+      background:#181818;
+      color:white;
+      border-radius:20px;
+      padding:30px;
+      position:relative;
+      text-align:center;
+      animation:popup 0.3s ease;
+    }
+
+    @keyframes popup{
+
+      from{
+        transform:scale(0.8);
+        opacity:0;
+      }
+
+      to{
+        transform:scale(1);
+        opacity:1;
+      }
+    }
+
+    .close{
+      position:absolute;
+      top:15px;
+      right:20px;
+      font-size:32px;
+      cursor:pointer;
+    }
+
+    .modal-content img{
+      width:100%;
+      height:300px;
+      object-fit:cover;
+      border-radius:15px;
+      margin-bottom:20px;
+    }
+
+    .modal-content h2{
+      margin-bottom:15px;
+    }
+
+    .modal-content p{
+      color:#ccc;
+      margin-bottom:12px;
+      line-height:1.5;
+    }
+
+    .confirm-btn{
+      margin-top:20px;
+      background:#ff416c;
+      color:white;
+      border:none;
+      padding:15px 30px;
+      border-radius:10px;
+      font-size:16px;
+      font-weight:bold;
+      cursor:pointer;
+    }
+
+    .confirm-btn:hover{
+      background:#ff2c5f;
+    }
+
+    /* FOOTER */
+
+    footer{
+      background:#111;
+      text-align:center;
+      padding:50px;
+      margin-top:60px;
+      border-top:1px solid #222;
+    }
+
+    footer p{
+      color:#999;
+      margin-top:10px;
+    }
+
+    /* RESPONSIVE */
+
+    @media(max-width:900px){
+
+      .top-header{
+        flex-direction:column;
+        gap:20px;
+      }
+
+      nav{
+        flex-direction:column;
+        gap:20px;
+      }
+
+      .hero-content{
+        width:80%;
+        margin-left:30px;
+      }
+
+      .hero-content h1{
+        font-size:50px;
+      }
+
+      .hero-content p{
+        font-size:18px;
+      }
+
+      .modal-content{
+        width:90%;
+      }
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <!-- HEADER -->
+
+  <header>
+
+    <div class="top-header">
+
+      <div class="logo">
+        MovieTime
+      </div>
+
+      <div class="search-box">
+        <input type="text"
+        placeholder="Search Movies">
+      </div>
+
+      <div class="header-right">
+
+        <div class="city">
+            <label for="Location" >Choose a Location:</label>
+         <select>
+            <option value="Chennai">Chennai</option>
+<option value="Delhi">Delhi</option>
+<option value="Bangalore">Bangalore</option>
+<option value="Mumbai">Mumbai</option>
+<option value="Goa">Goa</option>
+         </select> 
+        </div>
+
+        <button class="signin-btn"
+        onclick="window.location.href='signin.html'">
+          Sign In
+        </button>
+
+      </div>
+
+    </div>
+
+    <!-- NAVBAR -->
+
+    <nav>
+
+      <div class="nav-left">
+            
+        <a href="bookmyshow.html">Home</a>
+        <a href="movies.html">Movies</a>
+        <a href="stream.html">Stream</a>
+        <a href="events.html">Events</a>
+        <a href="plays.html">Plays</a>
+        <a href="sports.html">Sports</a>
+
+      </div>
+
+      <div class="nav-right">
+
+        <a href="offers.html">Offers</a>
+        <a href="giftcard.html">Gift Cards</a>
+
+      </div>
+
+    </nav>
+
+  </header>
+
+  <!-- HERO -->
+
+  <section class="hero">
+
+    <div class="overlay"></div>
+
+    <div class="hero-content">
+
+      <h1>
+        Unlimited Movie Experience
+      </h1>
+
+      <p>
+        Watch blockbuster movies, action thrillers and entertainment on the big screen.
+      </p>
+
+      <div class="hero-buttons">
+
+        <button class="watch-btn"
+        onclick="scrollToMovies()">
+          Explore Movies
+        </button>
+
+        <button class="info-btn">
+          Watch Trailer
+        </button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- MOVIES -->
+
+  <section class="section" id="moviesSection">
+
+    <div class="section-header">
+
+      <h2>Trending Movies</h2>
+
+      <div class="view-all">
+        View All
+      </div>
+
+    </div>
+
+    <div class="movie-grid">
+
+      <!-- MOVIE 1 -->
+
+      <div class="movie-card"
+
+      onclick="openMovie(
+      'Avengers',
+      'https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=1600&auto=format&fit=crop',
+      'Epic superhero action movie with thrilling battles.',
+      '⭐ 9.3/10'
+      )">
+
+        <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=1600&auto=format&fit=crop">
+
+        <div class="movie-info">
+
+          <h3>Avengers</h3>
+
+          <p>Action / Adventure</p>
+
+          <div class="rating">
+            ⭐ 9.3/10
+          </div>
+
+          <button class="book-btn">
+            Book Tickets
+          </button>
+
+        </div>
+
+      </div>
+
+      <!-- MOVIE 2 -->
+
+      <div class="movie-card"
+
+      onclick="openMovie(
+      'Interstellar',
+      'https://images.unsplash.com/photo-1440404653325-ab127d49abc1?q=80&w=1600&auto=format&fit=crop',
+      'Sci-fi journey through space and time.',
+      '⭐ 9.1/10'
+      )">
+
+        <img src="https://images.unsplash.com/photo-1440404653325-ab127d49abc1?q=80&w=1600&auto=format&fit=crop">
+
+        <div class="movie-info">
+
+          <h3>Interstellar</h3>
+
+          <p>Sci-Fi / Drama</p>
+
+          <div class="rating">
+            ⭐ 9.1/10
+          </div>
+
+          <button class="book-btn">
+            Book Tickets
+          </button>
+
+        </div>
+
+      </div>
+
+      <!-- MOVIE 3 -->
+
+      <div class="movie-card"
+
+      onclick="openMovie(
+      'Batman',
+      'https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?q=80&w=1600&auto=format&fit=crop',
+      'Dark superhero thriller full of action.',
+      '⭐ 8.8/10'
+      )">
+
+        <img src="https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?q=80&w=1600&auto=format&fit=crop">
+
+        <div class="movie-info">
+
+          <h3>Batman</h3>
+
+          <p>Action / Crime</p>
+
+          <div class="rating">
+            ⭐ 8.8/10
+          </div>
+
+          <button class="book-btn">
+            Book Tickets
+          </button>
+
+        </div>
+
+      </div>
+
+      <!-- MOVIE 4 -->
+
+      <div class="movie-card"
+
+      onclick="openMovie(
+      'Joker',
+      'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=1600&auto=format&fit=crop',
+      'Psychological thriller with emotional drama.',
+      '⭐ 8.9/10'
+      )">
+
+        <img src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=1600&auto=format&fit=crop">
+
+        <div class="movie-info">
+
+          <h3>Joker</h3>
+
+          <p>Drama / Thriller</p>
+
+          <div class="rating">
+            ⭐ 8.9/10
+          </div>
+
+          <button class="book-btn">
+            Book Tickets
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- MODAL -->
+
+  <div class="modal" id="movieModal">
+
+    <div class="modal-content">
+
+      <span class="close"
+      onclick="closeMovie()">
+        &times;
+      </span>
+
+      <img id="modalImage">
+
+      <h2 id="modalTitle"></h2>
+
+      <p id="modalRating"></p>
+
+      <p id="modalDescription"></p>
+
+      <button class="confirm-btn"
+      onclick="bookMovie()">
+        Confirm Booking
+      </button>
+
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+
+  <footer>
+
+    <h2>MovieTime Movies</h2>
+
+    <p>
+      Action | Thriller | Sci-Fi | Entertainment
+    </p>
+
+  </footer>
+
+  <!-- JAVASCRIPT -->
+
+  <script>
+
+    function scrollToMovies(){
+
+      document.getElementById("moviesSection")
+      .scrollIntoView({
+        behavior:'smooth'
+      });
+
+    }
+
+    function openMovie(title,image,description,rating){
+
+      document.getElementById("movieModal")
+      .style.display="flex";
+
+      document.getElementById("modalTitle")
+      .innerHTML=title;
+
+      document.getElementById("modalImage")
+      .src=image;
+
+      document.getElementById("modalRating")
+      .innerHTML="<b>Rating:</b> " + rating;
+
+      document.getElementById("modalDescription")
+      .innerHTML=description;
+
+    }
+
+    function closeMovie(){
+
+      document.getElementById("movieModal")
+      .style.display="none";
+
+    }
+
+    function bookMovie(){
+
+      alert("Movie Ticket Booked Successfully!");
+
+      window.location.href="index.html";
+
+    }
+
+    window.onclick=function(e){
+
+      let modal=document.getElementById("movieModal");
+
+      if(e.target==modal){
+
+        modal.style.display="none";
+
+      }
+
+    }
+
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Events - MovieTime</title>
+  <link rel="icon" type="png" href="logo.png">
+
+  <style>
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:Arial,sans-serif;
+    }
+
+    body{
+      background:#f3f3f3;
+    }
+
+    a{
+      text-decoration:none;
+      color:inherit;
+    }
+
+    /* HEADER */
+
+    header{
+      background:white;
+      border-bottom:1px solid #ddd;
+      position:sticky;
+      top:0;
+      z-index:1000;
+    }
+
+    .top-header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:18px 60px;
+    }
+
+    .logo{
+      font-size:32px;
+      font-weight:bold;
+      color:#ff416c;
+    }
+
+    .search-box{
+      flex:1;
+      margin:0 40px;
+    }
+
+    .search-box input{
+      width:100%;
+      padding:14px 20px;
+      border:none;
+      border-radius:10px;
+      background:#f0f0f0;
+      outline:none;
+      font-size:16px;
+    }
+
+    .header-right{
+      display:flex;
+      align-items:center;
+      gap:20px;
+    }
+
+    .signin-btn{
+      background:#ff416c;
+      color:white;
+      border:none;
+      padding:12px 24px;
+      border-radius:10px;
+      font-weight:bold;
+      cursor:pointer;
+      transition:0.3s;
+    }
+
+    .signin-btn:hover{
+      background:#e9325c;
+    }
+
+    /* NAVBAR */
+
+    nav{
+      background:white;
+      display:flex;
+      justify-content:space-between;
+      padding:16px 60px;
+      border-bottom:1px solid #ddd;
+    }
+
+    .nav-left,
+    .nav-right{
+      display:flex;
+      gap:30px;
+    }
+
+    nav a{
+      font-weight:bold;
+      transition:0.3s;
+    }
+
+    nav a:hover{
+      color:#ff416c;
+    }
+
+    /* HERO */
+
+    .hero{
+      width:92%;
+      height:500px;
+      margin:35px auto;
+      border-radius:25px;
+      overflow:hidden;
+      position:relative;
+      background:url('https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?q=80&w=1600&auto=format&fit=crop') center/cover no-repeat;
+    }
+
+    .overlay{
+      position:absolute;
+      inset:0;
+      background:rgba(0,0,0,0.55);
+    }
+
+    .hero-content{
+      position:absolute;
+      top:50%;
+      left:70px;
+      transform:translateY(-50%);
+      color:white;
+      z-index:2;
+      max-width:650px;
+    }
+
+    .hero-content h1{
+      font-size:75px;
+      margin-bottom:25px;
+      line-height:1.1;
+    }
+
+    .hero-content p{
+      font-size:24px;
+      line-height:1.6;
+      margin-bottom:35px;
+    }
+
+    .hero-btn{
+      background:#ff416c;
+      color:white;
+      border:none;
+      padding:18px 40px;
+      border-radius:12px;
+      font-size:20px;
+      font-weight:bold;
+      cursor:pointer;
+      transition:0.3s;
+    }
+
+    .hero-btn:hover{
+      background:#e9325c;
+      transform:scale(1.05);
+    }
+    .category-section{
+      width:92%;
+      margin:60px auto;
+    }
+
+    .category-title{
+      font-size:45px;
+      margin-bottom:35px;
+    }
+
+    .categories{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+      gap:25px;
+    }
+
+    .category-card{
+      background:white;
+      padding:40px 20px;
+      border-radius:20px;
+      text-align:center;
+      box-shadow:0 5px 15px rgba(0,0,0,0.08);
+      transition:0.3s;
+      cursor:pointer;
+    }
+
+    .category-card:hover{
+      transform:translateY(-8px);
+    }
+
+    .category-card h3{
+      margin-top:15px;
+      font-size:24px;
+    }
+
+    .emoji{
+      font-size:60px;
+    }
+    .events-section{
+      width:92%;
+      margin:60px auto;
+    }
+
+    .events-header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:35px;
+    }
+
+    .events-header h2{
+      font-size:45px;
+    }
+
+    .view-all{
+      color:#ff416c;
+      font-weight:bold;
+      cursor:pointer;
+    }
+
+    .event-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+      gap:30px;
+    }
+
+    .event-card{
+      background:white;
+      border-radius:20px;
+      overflow:hidden;
+      box-shadow:0 5px 15px rgba(0,0,0,0.1);
+      transition:0.3s;
+      cursor:pointer;
+    }
+
+    .event-card:hover{
+      transform:translateY(-10px);
+    }
+
+    .event-card img{
+      width:100%;
+      height:300px;
+      object-fit:cover;
+    }
+
+    .event-info{
+      padding:20px;
+    }
+
+    .event-info h3{
+      font-size:28px;
+      margin-bottom:12px;
+    }
+
+    .event-info p{
+      color:#666;
+      margin-bottom:12px;
+      line-height:1.5;
+    }
+
+    .location{
+      color:#ff416c;
+      font-weight:bold;
+      margin-bottom:18px;
+    }
+
+    .event-btn{
+      width:100%;
+      padding:14px;
+      border:none;
+      border-radius:10px;
+      background:#ff416c;
+      color:white;
+      font-size:16px;
+      font-weight:bold;
+      cursor:pointer;
+    }
+
+    .event-btn:hover{
+      background:#e9325c;
+    }
+    .modal{
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.7);
+      display:none;
+      justify-content:center;
+      align-items:center;
+      z-index:2000;
+    }
+
+    .modal-content{
+      width:520px;
+      background:white;
+      border-radius:20px;
+      padding:30px;
+      text-align:center;
+      position:relative;
+      animation:popup 0.3s ease;
+    }
+
+    @keyframes popup{
+
+      from{
+        transform:scale(0.8);
+        opacity:0;
+      }
+
+      to{
+        transform:scale(1);
+        opacity:1;
+      }
+    }
+
+    .close{
+      position:absolute;
+      top:15px;
+      right:20px;
+      font-size:32px;
+      cursor:pointer;
+    }
+
+    .modal-content img{
+      width:100%;
+      height:280px;
+      object-fit:cover;
+      border-radius:15px;
+      margin-bottom:20px;
+    }
+
+    .modal-content h2{
+      margin-bottom:15px;
+    }
+
+    .modal-content p{
+      margin-bottom:12px;
+      color:#555;
+      line-height:1.5;
+    }
+
+    select{
+    border:none;
+    outline:none;
+    background:transparent;
+    font-size:16px;
+    cursor:pointer;
+}
+    .book-btn{
+      margin-top:20px;
+      background:#ff416c;
+      color:white;
+      border:none;
+      padding:15px 30px;
+      border-radius:10px;
+      font-size:16px;
+      font-weight:bold;
+      cursor:pointer;
+    }
+
+    .book-btn:hover{
+      background:#e9325c;
+    }
+    footer{
+      background:#111;
+      color:white;
+      text-align:center;
+      padding:45px;
+      margin-top:60px;
+    }
+    @media(max-width:900px){
+
+      .top-header{
+        flex-direction:column;
+        gap:20px;
+      }
+
+      nav{
+        flex-direction:column;
+        gap:20px;
+      }
+
+      .hero-content h1{
+        font-size:48px;
+      }
+
+      .hero-content p{
+        font-size:18px;
+      }
+
+      .modal-content{
+        width:90%;
+      }
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <header>
+
+    <div class="top-header">
+
+      <div class="logo">
+        
+      </div>MovieTime
+
+      <div class="search-box">
+        <input type="text"
+        placeholder="Search Concerts, Festivals and Events">
+      </div>
+
+      <div class="header-right">
+
+        <div class="city">
+            <label for="Location">Choose a Location:</label>
+         <select>
+            <option value="Chennai">Chennai</option>
+<option value="Delhi">Delhi</option>
+<option value="Bangalore">Bangalore</option>
+<option value="Mumbai">Mumbai</option>
+<option value="Goa">Goa</option>
+         </select> 
+        </div>
+
+        <button class="signin-btn"
+        onclick="window.location.href='signin.html'">
+          Sign In
+        </button>
+
+      </div>
+
+    </div>
+    <nav>
+
+      <div class="nav-left">
+        <a href="bookmyshow.html">Home</a>
+        <a href="movies.html">Movies</a>
+        <a href="stream.html">Stream</a>
+        <a href="events.html">Events</a>
+        <a href="plays.html">Plays</a>
+        <a href="sports.html">Sports</a>
+
+      </div>
+
+      <div class="nav-right">
+
+        <a href="offers.html">Offers</a>
+        <a href="giftcard.html">Gift Cards</a>
+
+      </div>
+
+    </nav>
+
+  </header>
+  <section class="hero">
+
+    <div class="overlay"></div>
+
+    <div class="hero-content">
+
+      <h1>
+        Discover Amazing Events
+      </h1>
+
+      <p>
+        Explore concerts, food festivals, comedy nights and exciting live experiences happening near you.
+      </p>
+
+      <button class="hero-btn"
+      onclick="scrollToEvents()">
+        Explore Events
+      </button>
+
+    </div>
+
+  </section>
+  <section class="category-section">
+
+    <h2 class="category-title">
+      Browse By Category
+    </h2>
+
+    <div class="categories">
+
+      <div class="category-card">
+        <div class="emoji">🎵</div>
+        <h3>Concerts</h3>
+      </div>
+
+      <div class="category-card">
+        <div class="emoji">😂</div>
+        <h3>Comedy</h3>
+      </div>
+
+      <div class="category-card">
+        <div class="emoji">🍔</div>
+        <h3>Food Fest</h3>
+      </div>
+
+      <div class="category-card">
+        <div class="emoji">🎉</div>
+        <h3>Parties</h3>
+      </div>
+
+    </div>
+
+  </section>
+  <section class="events-section" id="eventsSection">
+
+    <div class="events-header">
+
+      <h2>Trending Events</h2>
+
+      <div class="view-all">
+        View All
+      </div>
+
+    </div>
+
+    <div class="event-grid">
+      <div class="event-card"
+
+      onclick="openEvent(
+      'Sunburn Music Festival',
+      'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?q=80&w=1600&auto=format&fit=crop',
+      'Experience India’s biggest electronic music festival with live DJs and performances.',
+      'Bangalore Palace Grounds'
+      )">
+
+        <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?q=80&w=1600&auto=format&fit=crop">
+
+        <div class="event-info">
+
+          <h3>Sunburn Festival</h3>
+
+          <p>
+            Live DJ night and music festival.
+          </p>
+
+          <div class="location">
+            Bangalore
+          </div>
+
+          <button class="event-btn">
+            Book Now
+          </button>
+
+        </div>
+
+      </div>
+      <div class="event-card"
+
+      onclick="openEvent(
+      'Comedy Night Live',
+      'https://images.unsplash.com/photo-1527224538127-2104bb71c51b?q=80&w=1600&auto=format&fit=crop',
+      'Laugh out loud with top stand-up comedians performing live.',
+      'Phoenix Arena'
+      )">
+
+        <img src="https://images.unsplash.com/photo-1527224538127-2104bb71c51b?q=80&w=1600&auto=format&fit=crop">
+
+        <div class="event-info">
+
+          <h3>Comedy Night</h3>
+
+          <p>
+            Enjoy stand-up comedy performances.
+          </p>
+
+          <div class="location">
+            Bangalore
+          </div>
+
+          <button class="event-btn">
+            Book Now
+          </button>
+
+        </div>
+
+      </div>
+      <div class="event-card"
+
+      onclick="openEvent(
+      'Food Carnival',
+      'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=80&w=1600&auto=format&fit=crop',
+      'Taste dishes from all over the world with live music and entertainment.',
+      'City Food Street'
+      )">
+
+        <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=80&w=1600&auto=format&fit=crop">
+
+        <div class="event-info">
+
+          <h3>Food Carnival</h3>
+
+          <p>
+            Explore delicious cuisines and fun.
+          </p>
+
+          <div class="location">
+            Bangalore
+          </div>
+
+          <button class="event-btn">
+            Book Now
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+  <div class="modal" id="eventModal">
+
+    <div class="modal-content">
+
+      <span class="close"
+      onclick="closeEvent()">
+        &times;
+      </span>
+
+      <img id="modalImage">
+
+      <h2 id="modalTitle"></h2>
+
+      <p id="modalDescription"></p>
+
+      <p id="modalVenue"></p>
+
+      <button class="book-btn"
+      onclick="bookEvent()">
+        Confirm Booking
+      </button>
+
+    </div>
+
+  </div>
+  <footer>
+
+    <h2>MovieTime Events</h2>
+
+    <br>
+
+    <p>
+      Concerts | Festivals | Comedy | Live Experiences
+    </p>
+
+  </footer>
+  <script>
+
+    function scrollToEvents(){
+
+      document.getElementById("eventsSection")
+      .scrollIntoView({
+        behavior:'smooth'
+      });
+
+    }
+
+    function openEvent(title,image,description,venue){
+
+      document.getElementById("eventModal")
+      .style.display="flex";
+
+      document.getElementById("modalTitle")
+      .innerHTML=title;
+
+      document.getElementById("modalImage")
+      .src=image;
+
+      document.getElementById("modalDescription")
+      .innerHTML=description;
+
+      document.getElementById("modalVenue")
+      .innerHTML="<b>Venue:</b> " + venue;
+
+    }
+
+    function closeEvent(){
+
+      document.getElementById("eventModal")
+      .style.display="none";
+
+    }
+
+    function bookEvent(){
+
+      alert("Event booked successfully!");
+
+      window.location.href="bookmyshow.html";
+
+    }
+
+    window.onclick=function(e){
+
+      let modal=document.getElementById("eventModal");
+
+      if(e.target==modal){
+
+        modal.style.display="none";
+
+      }
+
+    }
+
+  </script>
+
+</body>
+</html>

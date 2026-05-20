@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Offers - MovieTime</title>
+  <link rel="icon" type="png" href="logo.png">
+
+  <style>
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:Arial,sans-serif;
+    }
+
+    body{
+      background:#111;
+      color:white;
+    }
+
+    select{
+    border:none;
+    outline:none;
+    background:transparent;
+    font-size:16px;
+    cursor:pointer;
+    color: white;
+}
+    a{
+      text-decoration:none;
+      color:inherit;
+    }
+
+    /* HEADER */
+
+    header{
+      background:#181818;
+      border-bottom:1px solid #222;
+      position:sticky;
+      top:0;
+      z-index:1000;
+    }
+
+    .top-header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:18px 60px;
+    }
+
+    .logo{
+      font-size:34px;
+      font-weight:bold;
+      color:#ff416c;
+    }
+
+    .search-box{
+      flex:1;
+      margin:0 40px;
+    }
+
+    .search-box input{
+      width:100%;
+      padding:14px 20px;
+      border:none;
+      border-radius:10px;
+      background:#2a2a2a;
+      color:white;
+      font-size:16px;
+      outline:none;
+    }
+
+    .header-right{
+      display:flex;
+      align-items:center;
+      gap:20px;
+    }
+
+    .signin-btn{
+      background:#ff416c;
+      color:white;
+      border:none;
+      padding:12px 24px;
+      border-radius:10px;
+      cursor:pointer;
+      font-weight:bold;
+      transition:0.3s;
+    }
+
+    .signin-btn:hover{
+      background:#ff2c5f;
+    }
+
+    /* NAVBAR */
+
+    nav{
+      background:#181818;
+      display:flex;
+      justify-content:space-between;
+      padding:16px 60px;
+      border-top:1px solid #222;
+    }
+
+    .nav-left,
+    .nav-right{
+      display:flex;
+      gap:30px;
+    }
+
+    nav a{
+      font-weight:bold;
+      transition:0.3s;
+    }
+
+    nav a:hover{
+      color:#ff416c;
+    }
+
+    /* HERO */
+
+    .hero{
+      width:92%;
+      height:420px;
+      margin:35px auto;
+      border-radius:25px;
+      overflow:hidden;
+      position:relative;
+      background:url('https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?q=80&w=1600&auto=format&fit=crop') center/cover no-repeat;
+    }
+
+    .overlay{
+      position:absolute;
+      inset:0;
+      background:rgba(0,0,0,0.6);
+    }
+
+    .hero-content{
+      position:absolute;
+      top:50%;
+      left:70px;
+      transform:translateY(-50%);
+      z-index:2;
+      max-width:600px;
+    }
+
+    .hero-content h1{
+      font-size:72px;
+      margin-bottom:25px;
+      line-height:1.1;
+    }
+
+    .hero-content p{
+      font-size:24px;
+      line-height:1.6;
+      margin-bottom:35px;
+      color:#ddd;
+    }
+
+    .hero-btn{
+      background:#ff416c;
+      color:white;
+      border:none;
+      padding:18px 38px;
+      border-radius:12px;
+      font-size:18px;
+      font-weight:bold;
+      cursor:pointer;
+      transition:0.3s;
+    }
+
+    .hero-btn:hover{
+      background:#ff2c5f;
+      transform:scale(1.05);
+    }
+
+    /* OFFERS SECTION */
+
+    .offers-section{
+      width:92%;
+      margin:60px auto;
+    }
+
+    .section-header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:35px;
+    }
+
+    .section-header h2{
+      font-size:42px;
+    }
+
+    .view-all{
+      color:#ff416c;
+      font-weight:bold;
+      cursor:pointer;
+    }
+
+    .offers-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+      gap:30px;
+    }
+
+    .offer-card{
+      background:#1c1c1c;
+      border-radius:22px;
+      overflow:hidden;
+      transition:0.3s;
+      cursor:pointer;
+      border:1px solid #2c2c2c;
+    }
+
+    .offer-card:hover{
+      transform:translateY(-10px);
+    }
+
+    .offer-card img{
+      width:100%;
+      height:220px;
+      object-fit:cover;
+    }
+
+    .offer-info{
+      padding:25px;
+    }
+
+    .offer-tag{
+      display:inline-block;
+      background:#ff416c;
+      color:white;
+      padding:8px 16px;
+      border-radius:30px;
+      font-size:14px;
+      margin-bottom:18px;
+      font-weight:bold;
+    }
+
+    .offer-info h3{
+      font-size:30px;
+      margin-bottom:15px;
+    }
+
+    .offer-info p{
+      color:#bbb;
+      line-height:1.6;
+      margin-bottom:18px;
+    }
+
+    .coupon{
+      background:#2c2c2c;
+      padding:12px;
+      border-radius:10px;
+      text-align:center;
+      font-weight:bold;
+      color:#ff416c;
+      margin-bottom:20px;
+    }
+
+    .claim-btn{
+      width:100%;
+      padding:15px;
+      border:none;
+      border-radius:12px;
+      background:#ff416c;
+      color:white;
+      font-size:16px;
+      font-weight:bold;
+      cursor:pointer;
+      transition:0.3s;
+    }
+
+    .claim-btn:hover{
+      background:#ff2c5f;
+    }
+
+    /* MODAL */
+
+    .modal{
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.8);
+      display:none;
+      justify-content:center;
+      align-items:center;
+      z-index:2000;
+    }
+
+    .modal-content{
+      width:500px;
+      background:#1c1c1c;
+      border-radius:20px;
+      padding:30px;
+      position:relative;
+      text-align:center;
+      animation:popup 0.3s ease;
+    }
+
+    @keyframes popup{
+
+      from{
+        transform:scale(0.8);
+        opacity:0;
+      }
+
+      to{
+        transform:scale(1);
+        opacity:1;
+      }
+    }
+
+    .close{
+      position:absolute;
+      top:15px;
+      right:20px;
+      font-size:32px;
+      cursor:pointer;
+    }
+
+    .modal-content img{
+      width:100%;
+      height:260px;
+      object-fit:cover;
+      border-radius:15px;
+      margin-bottom:20px;
+    }
+
+    .modal-content h2{
+      margin-bottom:15px;
+    }
+
+    .modal-content p{
+      color:#ccc;
+      line-height:1.6;
+      margin-bottom:15px;
+    }
+
+    .redeem-btn{
+      margin-top:20px;
+      background:#ff416c;
+      color:white;
+      border:none;
+      padding:15px 30px;
+      border-radius:10px;
+      font-size:16px;
+      font-weight:bold;
+      cursor:pointer;
+    }
+
+    .redeem-btn:hover{
+      background:#ff2c5f;
+    }
+
+    /* FOOTER */
+
+    footer{
+      background:#181818;
+      text-align:center;
+      padding:50px;
+      margin-top:60px;
+      border-top:1px solid #222;
+    }
+
+    footer p{
+      color:#999;
+      margin-top:10px;
+    }
+
+    /* RESPONSIVE */
+
+    @media(max-width:900px){
+
+      .top-header{
+        flex-direction:column;
+        gap:20px;
+      }
+
+      nav{
+        flex-direction:column;
+        gap:20px;
+      }
+
+      .hero-content h1{
+        font-size:50px;
+      }
+
+      .hero-content p{
+        font-size:18px;
+      }
+
+      .modal-content{
+        width:90%;
+      }
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <!-- HEADER -->
+
+  <header>
+
+    <div class="top-header">
+
+      <div class="logo">
+        MovieVerse
+      </div>
+
+      <div class="search-box">
+        <input type="text"
+        placeholder="Search Offers and Deals">
+      </div>
+
+      <div class="header-right">
+
+        <div class="city">
+            <label for="Location">Choose a Locationr:</label>
+         <select>
+            <option value="Chennai">Chennai</option>
+<option value="Delhi">Delhi</option>
+<option value="Bangalore">Bangalore</option>
+<option value="Mumbai">Mumbai</option>
+<option value="Goa">Goa</option>
+         </select> 
+        </div>
+
+        <button class="signin-btn"
+        onclick="window.location.href='signin.html'">
+          Sign In
+        </button>
+
+      </div>
+
+    </div>
+
+    <!-- NAVBAR -->
+
+    <nav>
+
+      <div class="nav-left">
+
+        <a href="movies.html">Movies</a>
+        <a href="stream.html">Stream</a>
+        <a href="events.html">Events</a>
+        <a href="plays.html">Plays</a>
+        <a href="sports.html">Sports</a>
+
+      </div>
+
+      <div class="nav-right">
+
+        <a href="offers.html">Offers</a>
+        <a href="giftcard.html">Gift Cards</a>
+
+      </div>
+
+    </nav>
+
+  </header>
+
+  <!-- HERO -->
+
+  <section class="hero">
+
+    <div class="overlay"></div>
+
+    <div class="hero-content">
+
+      <h1>
+        Exclusive Offers & Deals
+      </h1>
+
+      <p>
+        Save more on movie tickets, food combos, streaming subscriptions and live events.
+      </p>
+
+      <button class="hero-btn"
+      onclick="scrollToOffers()">
+        Explore Offers
+      </button>
+
+    </div>
+
+  </section>
+
+  <!-- OFFERS -->
+
+  <section class="offers-section" id="offersSection">
+
+    <div class="section-header">
+
+      <h2>Trending Offers</h2>
+
+      <div class="view-all">
+        View All
+      </div>
+
+    </div>
+
+    <div class="offers-grid">
+
+      <!-- OFFER 1 -->
+
+      <div class="offer-card"
+
+      onclick="openOffer(
+      '50% OFF Movie Tickets',
+      'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=1600&auto=format&fit=crop',
+      'Get flat 50% discount on all movie tickets booked this weekend.',
+      'MOVIE50'
+      )">
+
+        <img src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=1600&auto=format&fit=crop">
+
+        <div class="offer-info">
+
+          <div class="offer-tag">
+            LIMITED OFFER
+          </div>
+
+          <h3>50% OFF Movies</h3>
+
+          <p>
+            Book movie tickets with huge savings this weekend.
+          </p>
+
+          <div class="coupon">
+            Use Code: MOVIE50
+          </div>
+
+          <button class="claim-btn">
+            Claim Offer
+          </button>
+
+        </div>
+
+      </div>
+
+      <!-- OFFER 2 -->
+
+      <div class="offer-card"
+
+      onclick="openOffer(
+      'Free Popcorn Combo',
+      'https://images.unsplash.com/photo-1585647347384-2593bc35786b?q=80&w=1600&auto=format&fit=crop',
+      'Get free popcorn and drinks combo with premium movie bookings.',
+      'POPCORNFREE'
+      )">
+
+        <img src="https://images.unsplash.com/photo-1585647347384-2593bc35786b?q=80&w=1600&auto=format&fit=crop">
+
+        <div class="offer-info">
+
+          <div class="offer-tag">
+            FOOD OFFER
+          </div>
+
+          <h3>Free Popcorn Combo</h3>
+
+          <p>
+            Enjoy snacks absolutely free with selected bookings.
+          </p>
+
+          <div class="coupon">
+            Use Code: POPCORNFREE
+          </div>
+
+          <button class="claim-btn">
+            Claim Offer
+          </button>
+
+        </div>
+
+      </div>
+
+      <!-- OFFER 3 -->
+
+      <div class="offer-card"
+
+      onclick="openOffer(
+      'Stream Premium Discount',
+      'https://images.unsplash.com/photo-1524985069026-dd778a71c7b4?q=80&w=1600&auto=format&fit=crop',
+      'Get premium streaming subscription at discounted price.',
+      'STREAM30'
+      )">
+
+        <img src="https://images.unsplash.com/photo-1524985069026-dd778a71c7b4?q=80&w=1600&auto=format&fit=crop">
+
+        <div class="offer-info">
+
+          <div class="offer-tag">
+            STREAM OFFER
+          </div>
+
+          <h3>30% OFF Streaming</h3>
+
+          <p>
+            Stream latest movies and shows with premium access.
+          </p>
+
+          <div class="coupon">
+            Use Code: STREAM30
+          </div>
+
+          <button class="claim-btn">
+            Claim Offer
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- MODAL -->
+
+  <div class="modal" id="offerModal">
+
+    <div class="modal-content">
+
+      <span class="close"
+      onclick="closeOffer()">
+        &times;
+      </span>
+
+      <img id="modalImage">
+
+      <h2 id="modalTitle"></h2>
+
+      <p id="modalDescription"></p>
+
+      <p id="modalCoupon"></p>
+
+      <button class="redeem-btn"
+      onclick="redeemOffer()">
+        Redeem Offer
+      </button>
+
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+
+  <footer>
+
+    <h2>MovieVerse Offers</h2>
+
+    <p>
+      Discounts | Cashback | Streaming Deals | Movie Coupons
+    </p>
+
+  </footer>
+
+  <!-- JAVASCRIPT -->
+
+  <script>
+
+    function scrollToOffers(){
+
+      document.getElementById("offersSection")
+      .scrollIntoView({
+        behavior:'smooth'
+      });
+
+    }
+
+    function openOffer(title,image,description,coupon){
+
+      document.getElementById("offerModal")
+      .style.display="flex";
+
+      document.getElementById("modalTitle")
+      .innerHTML=title;
+
+      document.getElementById("modalImage")
+      .src=image;
+
+      document.getElementById("modalDescription")
+      .innerHTML=description;
+
+      document.getElementById("modalCoupon")
+      .innerHTML="<b>Coupon Code:</b> " + coupon;
+
+    }
+
+    function closeOffer(){
+
+      document.getElementById("offerModal")
+      .style.display="none";
+
+    }
+
+    function redeemOffer(){
+
+      alert("Offer Redeemed Successfully!");
+
+      window.location.href="bookmyshow.html";
+
+    }
+
+    window.onclick=function(e){
+
+      let modal=document.getElementById("offerModal");
+
+      if(e.target==modal){
+
+        modal.style.display="none";
+
+      }
+
+    }
+
+  </script>
+
+</body>
+</html>
